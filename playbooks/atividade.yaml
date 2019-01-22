@@ -1,0 +1,37 @@
+- name: Atividade 
+  hosts: all
+  tasks: 
+    - name: Adicionando usuarios developer, suporte e alexandre
+      user:
+        name: "{{ item.nome }}"
+        shell: "{{ item.base }}"
+      with_items:
+        - { nome: developer, base: "/bin/bash" }
+        - { nome: suporte, base: "/bin/bash" }
+        - { nome: alexandre, base: "/bin/bash" }
+
+    - name: Instalalando pacotes para debian
+      package:
+        name: "{{ item.pacote }}"
+      when: ansible_os_family == item.distro
+      with_items: 
+        - { pacote: vim, distro: Debian }
+        - { pacote: vim, distro: RedHat }
+        - { pacote: git, distro: Debian }
+        - { pacote: git, distro: RedHat }
+        - { pacote: figlet, distro: Debian }
+        - { pacote: epel-release, distro: RedHat }
+
+    - name: Criando diretorio /tmp/infraagil
+      file:
+        path: /tmp/infraagil
+        state: directory
+
+    - name: Adicionando conteudo no arquivo /tmp/infraagil/file
+      blockinfile:
+        path: /tmp/infraagil/file
+        create: yes
+        block: |
+          SouDevOps
+          Na 4Linux
+          Bloco de conteudo em arquivo.

@@ -1,0 +1,10 @@
+- name: Criando um loop
+  hosts: all
+  tasks:
+    - name: Instalando pacotes
+      package:
+        name: "{{ item }}"
+      with_items:
+        - vim
+        - cowsay
+        - figlet

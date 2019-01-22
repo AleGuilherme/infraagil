@@ -1,0 +1,4 @@
+- name: INSTALA PUPPET
+  hosts: all
+  roles:
+    - puppet

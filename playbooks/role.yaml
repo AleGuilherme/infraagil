@@ -1,0 +1,4 @@
+- name: Executando a primeira role
+  hosts: all
+  roles:
+    - base

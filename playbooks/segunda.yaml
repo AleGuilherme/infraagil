@@ -1,0 +1,23 @@
+- name: Minha segunda playbook
+  hosts: docker devops
+  vars:
+    username: null
+    pacote: null
+
+  tasks:
+    - name: Adicionando um usuario
+      user: 
+        name: "{{ username }}"
+        shell: /bin/bash
+      register: condicao
+      ignore_errors: yes
+    
+    - name: Debug
+      debug:
+        var: condicao
+
+    - name: Instalando um pacote
+      apt: 
+        name: "{{ pacote }}"
+        state: present
+      when: condicao.failed == false

@@ -1,0 +1,15 @@
+- name: Criando um loop
+  hosts: all
+  tasks:
+    - name: Instalando epel-release
+      yum:
+        name: epel-release
+      when: ansible_os_family == "RedHat"
+
+    - name: Instalando pacotes
+      package:
+        name: "{{ item }}"
+      with_items:
+        - vim
+        - cowsay
+        - figlet
