@@ -1,0 +1,22 @@
+- name: Criando container clusterizado
+  hosts: docker
+  tasks:
+    - name: Criando REDE network_ale
+      docker_network:
+        name: network_ale
+        ipam_options:
+          subnet: '192.168.0.0/16'
+          gateway: 192.168.0.1
+
+    - name: Criando container 1
+      docker_container:
+        name: "{{ item.nome }}"
+        image: httpd
+        volumes:
+          - /srv/site_ale:/usr/local/apache2/htdocs/
+        networks:
+          - name: network_ale
+            ipv4_address: "{{ item.ip }}"
+      with_items:
+        - { nome: site_ale1, ip: 192.168.0.6 }
+        - { nome: site_ale2, ip: 192.168.0.7 }
