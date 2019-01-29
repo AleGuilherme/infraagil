@@ -3,4 +3,4 @@
 - name: fazendo deploy da producao
   service: 
     name: nginx
-    state: reload
+    state: reloaded
